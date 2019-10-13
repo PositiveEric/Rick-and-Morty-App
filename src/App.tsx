@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Body } from "./Body";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { client } from "./apollo";
+import "bootstrap/dist/css/bootstrap.css";
+import { Character } from "./Character";
+import { Planets } from "./Planets";
+import { Episodes } from "./Episodes";
+import { PlanetInfo } from "./PlanetInfo";
+import { EpisodeInfo } from "./EpisodeInfo";
+
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <Header />
+          <Route path="/" exact component={Body} />
+          <Route path="/characters/:id" exact component={Character} />
+          <Route path="/planets" exact component={Planets} />
+          <Route path="/episodes" exact component={Episodes} />
+          <Route path="/planet-info/:id" exact component={PlanetInfo} />
+          <Route path="/episode-info/:id" exact component={EpisodeInfo} />
+          <Footer />
+        </div>
+      </ApolloProvider>
+    </Router>
   );
-}
+};
 
 export default App;
